@@ -20,19 +20,23 @@ public class ReadingFaceApplication implements CommandLineRunner {
 	@Autowired
 	@Qualifier("com.example.ReadingFace.Components.postComponent")
 	public PostComponent postComponent;
-	
+
 	@Autowired
+	@Qualifier("serviceDecorator")
 	public PostService postService;
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(ReadingFaceApplication.class, args);
 	}
 
-@Override
-public void run(String... args) throws Exception {
-	postService.validationId(postComponent.getPosts())
-		.forEach((post)->{
-			System.out.println(post.getTitulo());
-		});
-}
+	@Override
+	public void run(String... args) throws Exception {
+		try {
+			postService.validation(postComponent.getPosts()).forEach((post) -> {
+				System.out.println(post.getTitulo());
+			});
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

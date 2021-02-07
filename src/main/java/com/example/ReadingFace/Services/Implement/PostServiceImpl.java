@@ -10,7 +10,7 @@ import com.example.ReadingFace.Model.Post;
 @Service
 public class PostServiceImpl implements com.example.ReadingFace.Services.PostService {
 
-	public List<Post> validationId(List<Post> posts) {
+	public List<Post> validation(List<Post> posts) {
 		System.out.println("Primer Servicio");
 		for(Post post: posts) {
 			if(post.getTitulo()==null) {
