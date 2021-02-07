@@ -5,12 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.ReadingFace.Model.Post;
-import com.example.ReadingFace.Services.PostService;
+//import com.example.ReadingFace.Services.PostService;
 
 @Service
-public class PostServiceImpl implements PostService {
+public class PostServiceImpl implements com.example.ReadingFace.Services.PostService {
 
-	@Override
 	public List<Post> validationId(List<Post> posts) {
 		System.out.println("Primer Servicio");
 		for(Post post: posts) {
@@ -21,3 +20,4 @@ public class PostServiceImpl implements PostService {
 		return posts;
 	}
 }
+

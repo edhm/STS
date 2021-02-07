@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.ReadingFace.Components.PostComponent;
 import com.example.ReadingFace.Model.Conexion;
 import com.example.ReadingFace.Services.PostService;
+//import com.example.ReadingFace.Services.PostService;
 
 @SpringBootApplication
 public class ReadingFaceApplication implements CommandLineRunner {
@@ -27,14 +28,6 @@ public class ReadingFaceApplication implements CommandLineRunner {
 		SpringApplication.run(ReadingFaceApplication.class, args);
 	}
 
-	/*
-	 * @Override
-	public void run(String... args) throws Exception {
-		postComponent.getPosts().forEach(p->{
-			System.out.println(p.getDescripcion());	
-		});
-	}
-	 * */
 @Override
 public void run(String... args) throws Exception {
 	postService.validationId(postComponent.getPosts())
