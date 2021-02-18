@@ -21,9 +21,23 @@ public class ReadingFaceApplication implements CommandLineRunner {
 	@Qualifier("com.example.ReadingFace.Components.postComponent")
 	public PostComponent postComponent;
 
-	@Autowired
-	@Qualifier("serviceDecorator")
+	/*
+	 * @Autowired
+	 * 
+	 * @Qualifier("serviceDecorator") public PostService postService;
+	 */
+
 	public PostService postService;
+
+	public PostService getPostService() {
+		return postService;
+	}
+
+	@Autowired
+	public void ReadingFaceApplication(@Qualifier("serviceDecorator") PostService postService) {
+		this.postService = postService;
+
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReadingFaceApplication.class, args);

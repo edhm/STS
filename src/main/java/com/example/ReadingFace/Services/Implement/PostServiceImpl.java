@@ -12,12 +12,19 @@ public class PostServiceImpl implements com.example.ReadingFace.Services.PostSer
 
 	public List<Post> validation(List<Post> posts) {
 		System.out.println("Primer Servicio");
-		for(Post post: posts) {
-			if(post.getTitulo()==null) {
+		for (Post post : posts) {
+			if (post.getTitulo() == null) {
 				throw new NullPointerException("Ingresar el Título");
 			}
 		}
 		return posts;
 	}
-}
 
+	//
+	//
+	@Override
+	public void addClass(Class clazz) {
+		// TODO Auto-generated method stub
+
+	}
+}
