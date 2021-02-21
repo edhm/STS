@@ -31,8 +31,9 @@ public class ReadingFaceApplication implements CommandLineRunner {
 
 	public PostService getPostService() {
 		return postService;
-	}
+	}                           
 
+	
 	@Autowired
 	public void ReadingFaceApplication(@Qualifier("serviceDecorator") PostService postService) {
 		this.postService = postService;
