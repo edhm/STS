@@ -1,5 +1,7 @@
 package com.example.ReadingFace;
 
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -9,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.ReadingFace.Components.PostComponent;
 import com.example.ReadingFace.Model.Conexion;
 import com.example.ReadingFace.Services.PostService;
+
 //import com.example.ReadingFace.Services.PostService;
 
 @SpringBootApplication
@@ -31,9 +34,8 @@ public class ReadingFaceApplication implements CommandLineRunner {
 
 	public PostService getPostService() {
 		return postService;
-	}                           
+	}
 
-	
 	@Autowired
 	public void ReadingFaceApplication(@Qualifier("serviceDecorator") PostService postService) {
 		this.postService = postService;
@@ -46,12 +48,17 @@ public class ReadingFaceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Log log = LogFactory.getLog(getClass());
+		// Log log = LogFactory.getLog(getClass());
+
 		try {
 			postService.validation(postComponent.getPosts()).forEach((post) -> {
-				System.out.println(post.getTitulo());
+				log.info(post.getTitulo());
+				// System.out.println(post.getTitulo());
 			});
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			log.error(e);
+			// System.out.println(e.getMessage());
 		}
 	}
 }
