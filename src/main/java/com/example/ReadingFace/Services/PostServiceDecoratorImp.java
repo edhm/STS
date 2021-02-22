@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.example.ReadingFace.Model.Post;
@@ -12,6 +14,7 @@ import com.example.ReadingFace.Services.Implement.PostServiceImpl;
 import com.example.ReadingFace.Services.Implement.PostServiceImplDos;
 
 @Service("serviceDecorator")
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class PostServiceDecoratorImp implements PostService {
 	private final Log log = LogFactory.getLog(getClass());
 	@Autowired
