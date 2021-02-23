@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.example.ReadingFace.Components.PostComponent;
 import com.example.ReadingFace.Model.Conexion;
@@ -16,13 +17,18 @@ import com.example.ReadingFace.Services.PostService;
 
 @SpringBootApplication
 public class ReadingFaceApplication implements CommandLineRunner {
+	/*
+	 * @Autowired
+	 * 
+	 * @Qualifier("beanConexion") private Conexion conexion;
+	 * 
+	 * @Autowired
+	 * 
+	 * @Qualifier("com.example.ReadingFace.Components.postComponent") public
+	 * PostComponent postComponent;
+	 */
 	@Autowired
-	@Qualifier("beanConexion")
-	private Conexion conexion;
-
-	@Autowired
-	@Qualifier("com.example.ReadingFace.Components.postComponent")
-	public PostComponent postComponent;
+	private JdbcTemplate jdbcTemplate;
 
 	/*
 	 * @Autowired
@@ -32,33 +38,37 @@ public class ReadingFaceApplication implements CommandLineRunner {
 
 	public PostService postService;
 
-	public PostService getPostService() {
-		return postService;
+	public ReadingFaceApplication() {
 	}
 
-	@Autowired
-	public void ReadingFaceApplication(@Qualifier("serviceDecorator") PostService postService) {
-		this.postService = postService;
+	/*
+	 * public PostService getPostService() { return postService; }
+	 */
 
-	}
-
+	/*
+	 * @Autowired public void ReadingFaceApplication(@Qualifier("serviceDecorator")
+	 * PostService postService) { this.postService = postService;
+	 * 
+	 * }
+	 * 
+	 * public static void main(String[] args) {
+	 * SpringApplication.run(ReadingFaceApplication.class, args); }
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(ReadingFaceApplication.class, args);
 	}
 
-	@Override
 	public void run(String... args) throws Exception {
-		Log log = LogFactory.getLog(getClass());
-		// Log log = LogFactory.getLog(getClass());
-
-		try {
-			postService.validation(postComponent.getPosts()).forEach((post) -> {
-				log.info(post.getTitulo());
-				// System.out.println(post.getTitulo());
-			});
-		} catch (Exception e) {
-			log.error(e);
-			// System.out.println(e.getMessage());
-		}
+		jdbcTemplate.execute("");	
 	}
+
+	/*
+	 * @Override public void run(String... args) throws Exception { Log log =
+	 * LogFactory.getLog(getClass()); // Log log = LogFactory.getLog(getClass());
+	 * 
+	 * try { postService.validation(postComponent.getPosts()).forEach((post) -> {
+	 * log.info(post.getTitulo()); // System.out.println(post.getTitulo()); }); }
+	 * catch (Exception e) { log.error(e); // System.out.println(e.getMessage()); }
+	 * }
+	 */
 }
