@@ -1,6 +1,14 @@
 package com.example.ReadingFace;
 
 import org.apache.commons.logging.LogFactory;
+
+import java.io.BufferedReader;
+import java.nio.Buffer;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,7 +67,25 @@ public class ReadingFaceApplication implements CommandLineRunner {
 	}
 
 	public void run(String... args) throws Exception {
-		jdbcTemplate.execute("");	
+
+		Path path = Paths.get("src/main/resources/import_querys.sql");
+		Log log = LogFactory.getLog(getClass());
+		try (BufferedReader bufferedReader = Files.newBufferedReader(path, Charset.forName("UTF-8"))) {
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				jdbcTemplate.execute(line);
+				//jdbcTemplate.execute("INSERT into permiso (nombre) values ('.Net Architect')");
+				log.info(line);
+			}
+		} catch (Exception e) {
+
+		}
+
+		/*
+		 * jdbcTemplate.execute("INSERT into permiso (nombre) values ('Ejemplo')");
+		 * jdbcTemplate.execute("INSERT into permiso (nombre) values ('Ed_0123')");
+		 * jdbcTemplate.execute("INSERT into permiso (nombre) values ('Ed_0124')");
+		 */
 	}
 
 	/*

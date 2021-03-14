@@ -35,10 +35,16 @@ public class CreandoConexion {
 	public DataSource getDatasource() {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUrl("jdbc:mysql://localhost:3306/blog");
-		ds.setUsername("guest_user");
-		ds.setPassword("guest_password");
-		
+		ds.setUrl("jdbc:mysql://localhost:3306/blog?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+		/*
+?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+		 * */
+		/*
+		 * ds.setUsername("guest_user"); ds.setPassword("guest_password");
+		 **/
+		ds.setUsername("wenly");
+		ds.setPassword("whm");
+
 		return ds;
 	}
 }
