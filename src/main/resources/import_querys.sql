@@ -1,1 +1,1 @@
-INSERT into permiso (nombre) values ('Dba Oracle ')
+INSERT into permiso (nombre) values ('Dba MySQL ')

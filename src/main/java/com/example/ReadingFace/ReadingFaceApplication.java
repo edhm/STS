@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,80 +22,49 @@ import com.example.ReadingFace.Components.PostComponent;
 import com.example.ReadingFace.Model.Conexion;
 import com.example.ReadingFace.Services.PostService;
 
-//import com.example.ReadingFace.Services.PostService;
-
 @SpringBootApplication
 public class ReadingFaceApplication implements CommandLineRunner {
-	/*
-	 * @Autowired
-	 * 
-	 * @Qualifier("beanConexion") private Conexion conexion;
-	 * 
-	 * @Autowired
-	 * 
-	 * @Qualifier("com.example.ReadingFace.Components.postComponent") public
-	 * PostComponent postComponent;
-	 */
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	/*
-	 * @Autowired
-	 * 
-	 * @Qualifier("serviceDecorator") public PostService postService;
-	 */
+	@Value("${readingFace.jdbc.import.ruta}")
+	private String ruta;
 
-	public PostService postService;
+	@Value("${readingFace.jdbc.import}")
+	private String importar;
 
 	public ReadingFaceApplication() {
 	}
 
-	/*
-	 * public PostService getPostService() { return postService; }
-	 */
+	Log log = LogFactory.getLog(getClass());
 
-	/*
-	 * @Autowired public void ReadingFaceApplication(@Qualifier("serviceDecorator")
-	 * PostService postService) { this.postService = postService;
-	 * 
-	 * }
-	 * 
-	 * public static void main(String[] args) {
-	 * SpringApplication.run(ReadingFaceApplication.class, args); }
-	 */
 	public static void main(String[] args) {
 		SpringApplication.run(ReadingFaceApplication.class, args);
 	}
 
+	@Override
 	public void run(String... args) throws Exception {
 
-		Path path = Paths.get("src/main/resources/import_querys.sql");
-		Log log = LogFactory.getLog(getClass());
-		try (BufferedReader bufferedReader = Files.newBufferedReader(path, Charset.forName("UTF-8"))) {
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				jdbcTemplate.execute(line);
-				//jdbcTemplate.execute("INSERT into permiso (nombre) values ('.Net Architect')");
-				log.info(line);
+		if (importar.equalsIgnoreCase("true")) {
+			// Path path = Paths.get("src/main/resources/import_querys.sql");
+			Path path = Paths.get(ruta);
+
+			try (BufferedReader bufferedReader = Files.newBufferedReader(path, Charset.forName("UTF-8"))) {
+				String line;
+				while ((line = bufferedReader.readLine()) != null) {
+					jdbcTemplate.execute(line);
+					// jdbcTemplate.execute("INSERT into permiso (nombre) values ('.Net
+					// Architect')");
+					log.info(line);
+				}
+			} catch (Exception e) {
+
 			}
-		} catch (Exception e) {
 
 		}
-
-		/*
-		 * jdbcTemplate.execute("INSERT into permiso (nombre) values ('Ejemplo')");
-		 * jdbcTemplate.execute("INSERT into permiso (nombre) values ('Ed_0123')");
-		 * jdbcTemplate.execute("INSERT into permiso (nombre) values ('Ed_0124')");
-		 */
+		log.info("Cantidad de permisos: "
+				+ jdbcTemplate.queryForObject("SELECT COUNT(*) FROM blog.permiso;", Integer.class));
 	}
 
-	/*
-	 * @Override public void run(String... args) throws Exception { Log log =
-	 * LogFactory.getLog(getClass()); // Log log = LogFactory.getLog(getClass());
-	 * 
-	 * try { postService.validation(postComponent.getPosts()).forEach((post) -> {
-	 * log.info(post.getTitulo()); // System.out.println(post.getTitulo()); }); }
-	 * catch (Exception e) { log.error(e); // System.out.println(e.getMessage()); }
-	 * }
-	 */
 }
